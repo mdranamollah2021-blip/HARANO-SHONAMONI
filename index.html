@@ -1,8 +1,817 @@
-<!doctype html><html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>হারানো শোনামনি</title><style>*{box-sizing:border-box}body{margin:0;font-family:Arial,'Noto Sans Bengali',sans-serif;background:#f7f8fc;color:#182033;line-height:1.6}header{color:#fff;background:linear-gradient(135deg,#6d28d9,#a21caf);padding-bottom:55px}nav,main,.hero{max-width:1100px;margin:auto;padding-left:20px;padding-right:20px}nav{padding-top:18px;display:flex;justify-content:space-between;align-items:center}.logo{font-size:25px;font-weight:800}.logo small{display:block;font-size:12px;opacity:.8}.hero{padding-top:55px;display:grid;grid-template-columns:1.25fr .75fr;gap:30px;align-items:center}.hero h1{font-size:clamp(36px,5vw,58px);line-height:1.1;margin:0 0 18px}.hero p{font-size:18px}.heroCard{background:#ffffff20;border:1px solid #ffffff40;border-radius:20px;padding:28px}.big{font-size:55px}.btn{display:inline-block;border:0;border-radius:11px;padding:12px 18px;font-weight:700;text-decoration:none;cursor:pointer;font-size:15px}.primary{background:#6d28d9;color:#fff}.white{background:#fff;color:#6d28d9}.outline{background:#fff;color:#182033;border:1px solid #ddd}main{padding-top:35px;padding-bottom:60px}.section{margin:35px 0}.section h2{text-align:center;font-size:30px;margin-bottom:5px}.sub{text-align:center;color:#667085;margin:0 auto 22px}.actions,.forms{display:grid;grid-template-columns:1fr 1fr;gap:18px}.action,.card{background:#fff;border:1px solid #e4e7ec;border-radius:17px;padding:22px;box-shadow:0 7px 22px #1018280b}.action{text-decoration:none;color:inherit}.icon{font-size:35px}.search{display:flex;gap:10px;flex-wrap:wrap;background:#fff;border:1px solid #e4e7ec;padding:18px;border-radius:16px}.search input,.search select,.form input,.form select,.form textarea{padding:12px;border:1px solid #ccd2dc;border-radius:9px;font:inherit}.search input{flex:1;min-width:220px}.search select{min-width:150px}.results{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:16px}.empty{grid-column:1/-1;text-align:center;padding:28px;color:#667085;background:#fff;border:1px dashed #ccd2dc;border-radius:15px}.form{background:#fff;border:1px solid #e4e7ec;border-radius:17px;padding:23px}.form label{display:block;font-weight:700;margin:12px 0 5px}.form input,.form select,.form textarea{width:100%}.form textarea{min-height:95px}.notice{background:#fff7ed;color:#9a3412;border:1px solid #fed7aa;padding:13px;border-radius:12px}.privacy{background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;padding:13px;border-radius:12px;margin-top:15px}.ok{display:none;background:#ecfdf3;color:#067647;border:1px solid #abefc6;padding:12px;border-radius:10px;margin-bottom:12px}footer{text-align:center;background:#111827;color:#d0d5dd;padding:30px 20px;font-size:14px}@media(max-width:800px){.hero,.actions,.forms{grid-template-columns:1fr}.results{grid-template-columns:1fr}nav a{display:none}}
-</style></head><body>
-<header><nav><div class="logo">💜 হারানো শোনামনি<small>একটি মানবিক উদ্যোগ</small></div><div><a style="color:#fff;margin-left:15px" href="#search">শিশু খুঁজুন</a><a style="color:#fff;margin-left:15px" href="#report">রিপোর্ট করুন</a></div></nav><div class="hero"><div><h1>একটি শোনামনিকে<br>বাড়ি ফিরিয়ে দিতে এগিয়ে আসুন</h1><p>হারিয়ে যাওয়া শিশুদের তথ্য খুঁজে দেখা এবং পাওয়া শিশুদের নিরাপদভাবে রিপোর্ট করার জন্য একটি সহজ প্ল্যাটফর্ম।</p><a class="btn white" href="#search">🔎 শিশু খুঁজুন</a> <a class="btn outline" href="#report">📢 রিপোর্ট করুন</a></div><div class="heroCard"><div class="big">🧒❤️</div><h2>আপনার একটি তথ্য গুরুত্বপূর্ণ</h2><p>সঠিক তথ্য দ্রুত শেয়ার করা পরিবারকে সাহায্য করতে পারে।</p></div></div></header>
-<main><section class="section"><h2>আপনি কী করতে চান?</h2><p class="sub">সঠিক অপশন বেছে নিয়ে তথ্য দিন।</p><div class="actions"><a class="action" href="#report" onclick="setType('missing')"><div class="icon">🚨</div><h3>শিশু হারিয়েছে</h3><p>হারিয়ে যাওয়া শিশুর তথ্য ও ছবি রিপোর্ট করুন।</p></a><a class="action" href="#report" onclick="setType('found')"><div class="icon">🤝</div><h3>শিশু পাওয়া গেছে</h3><p>কোনো শিশু পাওয়া গেলে তার তথ্য জানান।</p></a></div></section>
-<section class="section" id="search"><h2>🔎 হারানো শোনামনি খুঁজুন</h2><p class="sub">নাম, এলাকা বা বর্ণনা দিয়ে খুঁজে দেখুন।</p><div class="search"><input id="q" placeholder="নাম / এলাকা / বর্ণনা"><select id="filter"><option value="">সব রিপোর্ট</option><option value="missing">হারিয়েছে</option><option value="found">পাওয়া গেছে</option></select><button class="btn primary" onclick="searchReports()">খুঁজুন</button></div><div id="results" class="results"></div></section>
-<section class="section" id="report"><h2>📢 রিপোর্ট জমা দিন</h2><p class="sub">তথ্য যতটা সম্ভব সঠিকভাবে দিন।</p><div class="forms"><div class="form"><div id="ok" class="ok">✅ রিপোর্টটি এই ব্রাউজারে সংরক্ষণ হয়েছে।</div><form id="f"><label>রিপোর্টের ধরন</label><select id="type"><option value="missing">🚨 শিশু হারিয়েছে</option><option value="found">🤝 শিশু পাওয়া গেছে</option></select><label>শিশুর নাম</label><input id="name" required><label>বয়স</label><input id="age" placeholder="যেমন: ৭ বছর" required><label>লিঙ্গ</label><select id="gender"><option>ছেলে</option><option>মেয়ে</option><option>জানা নেই</option></select><label>জেলা / শহর / এলাকা</label><input id="area" required><label>তারিখ</label><input id="date" type="date" required><label>শেষ কোথায় দেখা গেছে / কোথায় পাওয়া গেছে?</label><input id="place" required><label>বর্ণনা</label><textarea id="desc" placeholder="পোশাক, বৈশিষ্ট্য বা প্রয়োজনীয় তথ্য"></textarea><label>যোগাযোগের তথ্য</label><input id="contact" placeholder="ফোন/ইমেইল (প্রকাশ করতে চান এমন তথ্য)"><label>ছবির লিংক (ঐচ্ছিক)</label><input id="photo" placeholder="পাবলিক ছবির লিংক থাকলে দিন"><div class="privacy">🔐 <b>গোপনীয়তা:</b> NID, পাসপোর্ট, বাসার পূর্ণ ঠিকানা বা অন্য সংবেদনশীল তথ্য দেবেন না।</div><br><button class="btn primary">রিপোর্ট জমা দিন</button></form></div><div class="card"><h3>⚠️ গুরুত্বপূর্ণ</h3><div class="notice">এটি প্রথম ধাপের ডেমো। রিপোর্ট এখন এই ব্রাউজারের Local Storage-এ থাকে; কেন্দ্রীয় অনলাইন ডাটাবেসে যায় না।</div><h3>পরের ধাপে</h3><ul><li>নিরাপদ অনলাইন ডাটাবেস</li><li>ছবি আপলোড</li><li>Admin approval / যাচাই</li><li>জেলা ও তারিখ দিয়ে উন্নত সার্চ</li><li>রিপোর্ট সম্পাদনা ও মুছে ফেলা</li></ul><p>শিশুদের তথ্য প্রকাশের আগে যাচাই ও গোপনীয়তার নিয়ম রাখা জরুরি।</p></div></div></section></main>
-<footer><b>💜 হারানো শোনামনি</b><p>মানুষ মানুষের জন্য — একটি শিশুকে তার পরিবারের কাছে ফিরিয়ে দিতে আমরা একসাথে কাজ করি।</p><p>এই ওয়েবসাইট জরুরি আইনশৃঙ্খলা বাহিনী বা সরকারি নিখোঁজ শিশু ব্যবস্থার বিকল্প নয়।</p></footer>
-<script>let reports=JSON.parse(localStorage.getItem('hs_reports')||'[]');function setType(t){document.getElementById('type').value=t}function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}function render(a){let b=document.getElementById('results');if(!a.length){b.innerHTML='<div class="empty">এখনো কোনো রিপোর্ট নেই। নতুন রিপোর্ট যোগ হলে এখানে দেখা যাবে।</div>';return}b.innerHTML=a.map(r=>`<div class="card"><b>${r.type==='missing'?'🚨 হারিয়েছে':'🤝 পাওয়া গেছে'}</b><h3>${esc(r.name)}</h3><p><b>বয়স:</b> ${esc(r.age)}<br><b>এলাকা:</b> ${esc(r.area)}<br><b>তারিখ:</b> ${esc(r.date)}</p><p>${esc(r.desc)}</p>${r.photo?`<a href="${esc(r.photo)}" target="_blank" rel="noopener">📷 ছবি</a>`:''}${r.contact?`<p><b>যোগাযোগ:</b> ${esc(r.contact)}</p>`:''}</div>`).join('')}function searchReports(){let q=document.getElementById('q').value.toLowerCase().trim(),t=document.getElementById('filter').value;render(reports.filter(r=>(!q||(r.name+' '+r.area+' '+r.place+' '+r.desc).toLowerCase().includes(q))&&(!t||r.type===t)))}document.getElementById('f').onsubmit=e=>{e.preventDefault();let r={type:type.value,name:name.value,age:age.value,gender:gender.value,area:area.value,date:date.value,place:place.value,desc:desc.value,contact:contact.value,photo:photo.value};reports.unshift(r);localStorage.setItem('hs_reports',JSON.stringify(reports));ok.style.display='block';e.target.reset();render(reports);setTimeout(()=>ok.style.display='none',5000)};render(reports)</script></body></html>
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>হারানো শোনামনি</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:Arial,'Noto Sans Bengali',sans-serif;
+background:#f7f8fc;
+color:#182033;
+line-height:1.6
+}
+header{
+color:#fff;
+background:linear-gradient(135deg,#6d28d9,#a21caf);
+padding-bottom:55px
+}
+nav,main,.hero{
+max-width:1100px;
+margin:auto;
+padding-left:20px;
+padding-right:20px
+}
+nav{
+padding-top:18px;
+display:flex;
+justify-content:space-between;
+align-items:center
+}
+.logo{font-size:25px;font-weight:800}
+.logo small{display:block;font-size:12px;opacity:.8}
+
+.hero{
+padding-top:55px;
+display:grid;
+grid-template-columns:1.25fr .75fr;
+gap:30px;
+align-items:center
+}
+.hero h1{
+font-size:clamp(36px,5vw,58px);
+line-height:1.1;
+margin:0 0 18px
+}
+.hero p{font-size:18px}
+
+.heroCard{
+background:#ffffff20;
+border:1px solid #ffffff40;
+border-radius:20px;
+padding:28px
+}
+.big{font-size:55px}
+
+.btn{
+display:inline-block;
+border:0;
+border-radius:11px;
+padding:12px 18px;
+font-weight:700;
+text-decoration:none;
+cursor:pointer;
+font-size:15px
+}
+.primary{background:#6d28d9;color:#fff}
+.white{background:#fff;color:#6d28d9}
+.outline{background:#fff;color:#182033;border:1px solid #ddd}
+
+main{
+padding-top:35px;
+padding-bottom:60px
+}
+.section{margin:35px 0}
+.section h2{
+text-align:center;
+font-size:30px;
+margin-bottom:5px
+}
+.sub{
+text-align:center;
+color:#667085;
+margin:0 auto 22px
+}
+
+.actions,.forms{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px
+}
+.action,.card{
+background:#fff;
+border:1px solid #e4e7ec;
+border-radius:17px;
+padding:22px;
+box-shadow:0 7px 22px #1018280b
+}
+.action{
+text-decoration:none;
+color:inherit
+}
+.icon{font-size:35px}
+
+.search{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+background:#fff;
+border:1px solid #e4e7ec;
+padding:18px;
+border-radius:16px
+}
+.search input,.search select,
+.form input,.form select,.form textarea{
+padding:12px;
+border:1px solid #ccd2dc;
+border-radius:9px;
+font:inherit
+}
+.search input{
+flex:1;
+min-width:220px
+}
+.search select{min-width:150px}
+
+.results{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin-top:16px
+}
+.empty{
+grid-column:1/-1;
+text-align:center;
+padding:28px;
+color:#667085;
+background:#fff;
+border:1px dashed #ccd2dc;
+border-radius:15px
+}
+
+.form{
+background:#fff;
+border:1px solid #e4e7ec;
+border-radius:17px;
+padding:23px
+}
+.form label{
+display:block;
+font-weight:700;
+margin:12px 0 5px
+}
+.form input,.form select,.form textarea{width:100%}
+.form textarea{min-height:95px}
+
+.notice{
+background:#fff7ed;
+color:#9a3412;
+border:1px solid #fed7aa;
+padding:13px;
+border-radius:12px
+}
+.privacy{
+background:#eff6ff;
+color:#1e40af;
+border:1px solid #bfdbfe;
+padding:13px;
+border-radius:12px;
+margin-top:15px
+}
+.ok{
+display:none;
+background:#ecfdf3;
+color:#067647;
+border:1px solid #abefc6;
+padding:12px;
+border-radius:10px;
+margin-bottom:12px
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin:20px 0
+}
+.stat{
+background:#fff;
+border-radius:15px;
+padding:18px;
+text-align:center;
+border:1px solid #e4e7ec
+}
+.stat strong{
+display:block;
+font-size:30px;
+color:#6d28d9
+}
+
+.card img{
+width:100%;
+max-height:230px;
+object-fit:cover;
+border-radius:12px;
+margin-bottom:12px
+}
+
+.delete{
+background:#fee2e2;
+color:#b91c1c;
+border:0;
+border-radius:8px;
+padding:8px 12px;
+cursor:pointer;
+font-weight:bold
+}
+
+footer{
+text-align:center;
+background:#111827;
+color:#d0d5dd;
+padding:30px 20px;
+font-size:14px
+}
+
+@media(max-width:800px){
+.hero,.actions,.forms{grid-template-columns:1fr}
+.results{grid-template-columns:1fr}
+.stats{grid-template-columns:1fr 1fr}
+nav a{display:none}
+}
+
+@media(max-width:500px){
+.stats{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<nav>
+<div class="logo">
+💜 হারানো শোনামনি
+<small>একটি মানবিক উদ্যোগ</small>
+</div>
+
+<div>
+<a style="color:#fff;margin-left:15px" href="#search">শিশু খুঁজুন</a>
+<a style="color:#fff;margin-left:15px" href="#report">রিপোর্ট করুন</a>
+</div>
+</nav>
+
+<div class="hero">
+
+<div>
+<h1>
+একটি শোনামনিকে<br>
+বাড়ি ফিরিয়ে দিতে এগিয়ে আসুন
+</h1>
+
+<p>
+হারিয়ে যাওয়া শিশুদের তথ্য খুঁজে দেখা এবং পাওয়া শিশুদের
+নিরাপদভাবে রিপোর্ট করার জন্য একটি সহজ প্ল্যাটফর্ম।
+</p>
+
+<a class="btn white" href="#search">🔎 শিশু খুঁজুন</a>
+<a class="btn outline" href="#report">📢 রিপোর্ট করুন</a>
+</div>
+
+<div class="heroCard">
+<div class="big">🧒❤️</div>
+<h2>আপনার একটি তথ্য গুরুত্বপূর্ণ</h2>
+<p>
+সঠিক তথ্য দ্রুত শেয়ার করা পরিবারকে সাহায্য করতে পারে।
+</p>
+</div>
+
+</div>
+</header>
+
+<main>
+
+<section class="section">
+
+<h2>📊 রিপোর্টের হিসাব</h2>
+
+<div class="stats">
+
+<div class="stat">
+<strong id="totalCount">0</strong>
+মোট রিপোর্ট
+</div>
+
+<div class="stat">
+<strong id="missingCount">0</strong>
+হারানো শিশু
+</div>
+
+<div class="stat">
+<strong id="foundCount">0</strong>
+পাওয়া শিশু
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+<h2>আপনি কী করতে চান?</h2>
+<p class="sub">
+সঠিক অপশন বেছে নিয়ে তথ্য দিন।
+</p>
+
+<div class="actions">
+
+<a class="action"
+href="#report"
+onclick="setType('missing')">
+
+<div class="icon">🚨</div>
+
+<h3>শিশু হারিয়েছে</h3>
+
+<p>
+হারিয়ে যাওয়া শিশুর তথ্য ও ছবি রিপোর্ট করুন।
+</p>
+
+</a>
+
+
+<a class="action"
+href="#report"
+onclick="setType('found')">
+
+<div class="icon">🤝</div>
+
+<h3>শিশু পাওয়া গেছে</h3>
+
+<p>
+কোনো শিশু পাওয়া গেলে তার তথ্য জানান।
+</p>
+
+</a>
+
+</div>
+
+</section>
+
+
+<section class="section" id="search">
+
+<h2>🔎 হারানো শোনামনি খুঁজুন</h2>
+
+<p class="sub">
+নাম, এলাকা, স্থান বা বর্ণনা দিয়ে খুঁজে দেখুন।
+</p>
+
+<div class="search">
+
+<input
+id="q"
+placeholder="নাম / এলাকা / স্থান / বর্ণনা"
+oninput="searchReports()"
+>
+
+<select id="filter" onchange="searchReports()">
+
+<option value="">সব রিপোর্ট</option>
+<option value="missing">🚨 হারিয়েছে</option>
+<option value="found">🤝 পাওয়া গেছে</option>
+
+</select>
+
+<button class="btn primary"
+onclick="searchReports()">
+🔎 খুঁজুন
+</button>
+
+</div>
+
+<div id="results" class="results"></div>
+
+</section>
+
+
+<section class="section" id="report">
+
+<h2>📢 রিপোর্ট জমা দিন</h2>
+
+<p class="sub">
+তথ্য যতটা সম্ভব সঠিকভাবে দিন।
+</p>
+
+<div class="forms">
+
+<div class="form">
+
+<div id="ok" class="ok">
+✅ রিপোর্ট সফলভাবে সংরক্ষণ হয়েছে।
+</div>
+
+<form id="f">
+
+<label>রিপোর্টের ধরন</label>
+
+<select id="type">
+
+<option value="missing">
+🚨 শিশু হারিয়েছে
+</option>
+
+<option value="found">
+🤝 শিশু পাওয়া গেছে
+</option>
+
+</select>
+
+
+<label>শিশুর নাম</label>
+
+<input
+id="name"
+required
+placeholder="শিশুর নাম"
+>
+
+
+<label>বয়স</label>
+
+<input
+id="age"
+placeholder="যেমন: ৭ বছর"
+required
+>
+
+
+<label>লিঙ্গ</label>
+
+<select id="gender">
+
+<option>ছেলে</option>
+<option>মেয়ে</option>
+<option>জানা নেই</option>
+
+</select>
+
+
+<label>জেলা / শহর / এলাকা</label>
+
+<input
+id="area"
+required
+placeholder="যেমন: ঢাকা, মিরপুর"
+>
+
+
+<label>তারিখ</label>
+
+<input
+id="date"
+type="date"
+required
+>
+
+
+<label>
+শেষ কোথায় দেখা গেছে / কোথায় পাওয়া গেছে?
+</label>
+
+<input
+id="place"
+required
+placeholder="স্থান লিখুন"
+>
+
+
+<label>বর্ণনা</label>
+
+<textarea
+id="desc"
+placeholder="পোশাক, বৈশিষ্ট্য বা প্রয়োজনীয় তথ্য"
+></textarea>
+
+
+<label>যোগাযোগের তথ্য</label>
+
+<input
+id="contact"
+placeholder="ফোন/ইমেইল"
+>
+
+
+<label>ছবির লিংক (ঐচ্ছিক)</label>
+
+<input
+id="photo"
+placeholder="ছবির পাবলিক লিংক"
+>
+
+
+<div class="privacy">
+
+🔐 <b>গোপনীয়তা:</b>
+NID, পাসপোর্ট, বাসার পূর্ণ ঠিকানা বা অন্য সংবেদনশীল তথ্য দেবেন না।
+
+</div>
+
+<br>
+
+<button class="btn primary">
+📢 রিপোর্ট জমা দিন
+</button>
+
+</form>
+
+</div>
+
+
+<div class="card">
+
+<h3>⚠️ গুরুত্বপূর্ণ</h3>
+
+<div class="notice">
+
+এটি বর্তমানে একটি ডেমো সিস্টেম।
+রিপোর্ট এই ব্রাউজারের Local Storage-এ সংরক্ষিত হয়।
+
+</div>
+
+<h3>পরবর্তী উন্নয়ন</h3>
+
+<ul>
+
+<li>☁️ অনলাইন ডাটাবেস</li>
+<li>📷 সরাসরি ছবি আপলোড</li>
+<li>🔐 Admin approval</li>
+<li>🔎 উন্নত সার্চ ও ফিল্টার</li>
+<li>✏️ রিপোর্ট সম্পাদনা</li>
+<li>🗑️ রিপোর্ট মুছে ফেলা</li>
+
+</ul>
+
+<p>
+শিশুদের তথ্য প্রকাশের আগে যাচাই ও গোপনীয়তার নিয়ম রাখা জরুরি।
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+<b>💜 হারানো শোনামনি</b>
+
+<p>
+মানুষ মানুষের জন্য —
+একটি শিশুকে তার পরিবারের কাছে ফিরিয়ে দিতে
+আমরা একসাথে কাজ করি।
+</p>
+
+<p>
+এই ওয়েবসাইট জরুরি আইনশৃঙ্খলা বাহিনী
+বা সরকারি নিখোঁজ শিশু ব্যবস্থার বিকল্প নয়।
+</p>
+
+</footer>
+
+
+<script>
+
+let reports =
+JSON.parse(localStorage.getItem('hs_reports') || '[]');
+
+
+function setType(t){
+
+document.getElementById('type').value=t;
+
+}
+
+
+function esc(s){
+
+return String(s || '').replace(
+/[&<>"']/g,
+m => ({
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+'"':'&quot;',
+"'":'&#039;'
+}[m])
+);
+
+}
+
+
+function updateStats(){
+
+document.getElementById('totalCount').textContent =
+reports.length;
+
+document.getElementById('missingCount').textContent =
+reports.filter(r => r.type === 'missing').length;
+
+document.getElementById('foundCount').textContent =
+reports.filter(r => r.type === 'found').length;
+
+}
+
+
+function deleteReport(index){
+
+if(!confirm('এই রিপোর্টটি মুছে ফেলতে চান?')) return;
+
+reports.splice(index,1);
+
+localStorage.setItem(
+'hs_reports',
+JSON.stringify(reports)
+);
+
+searchReports();
+
+updateStats();
+
+}
+
+
+function render(a){
+
+let b=document.getElementById('results');
+
+if(!a.length){
+
+b.innerHTML =
+'<div class="empty">🔎 কোনো রিপোর্ট পাওয়া যায়নি।</div>';
+
+return;
+
+}
+
+b.innerHTML=a.map((r,i)=>`
+
+<div class="card">
+
+<b>
+${r.type==='missing'
+?'🚨 হারিয়েছে'
+:'🤝 পাওয়া গেছে'}
+</b>
+
+${r.photo ? `
+<img
+src="${esc(r.photo)}"
+alt="শিশুর ছবি"
+onerror="this.style.display='none'"
+>
+` : ''}
+
+<h3>${esc(r.name)}</h3>
+
+<p>
+
+<b>বয়স:</b>
+${esc(r.age)}
+<br>
+
+<b>লিঙ্গ:</b>
+${esc(r.gender)}
+<br>
+
+<b>এলাকা:</b>
+${esc(r.area)}
+<br>
+
+<b>তারিখ:</b>
+${esc(r.date)}
+<br>
+
+<b>স্থান:</b>
+${esc(r.place)}
+
+</p>
+
+<p>${esc(r.desc)}</p>
+
+${r.contact ? `
+<p>
+<b>যোগাযোগ:</b>
+${esc(r.contact)}
+</p>
+` : ''}
+
+<button
+class="delete"
+onclick="deleteReport(${reports.indexOf(r)})">
+🗑️ মুছে ফেলুন
+</button>
+
+</div>
+
+`).join('');
+
+}
+
+
+function searchReports(){
+
+let q =
+document.getElementById('q')
+.value
+.toLowerCase()
+.trim();
+
+let t =
+document.getElementById('filter')
+.value;
+
+let filtered =
+reports.filter(r => {
+
+let text =
+(
+r.name+' '+
+r.area+' '+
+r.place+' '+
+r.desc+' '+
+r.gender
+).toLowerCase();
+
+return
+(!q || text.includes(q)) &&
+(!t || r.type===t);
+
+});
+
+render(filtered);
+
+}
+
+
+document.getElementById('f').onsubmit =
+function(e){
+
+e.preventDefault();
+
+let r={
+
+id:Date.now(),
+
+type:document.getElementById('type').value,
+
+name:document.getElementById('name').value.trim(),
+
+age:document.getElementById('age').value.trim(),
+
+gender:document.getElementById('gender').value,
+
+area:document.getElementById('area').value.trim(),
+
+date:document.getElementById('date').value,
+
+place:document.getElementById('place').value.trim(),
+
+desc:document.getElementById('desc').value.trim(),
+
+contact:document.getElementById('contact').value.trim(),
+
+photo:document.getElementById('photo').value.trim()
+
+};
+
+
+reports.unshift(r);
+
+localStorage.setItem(
+'hs_reports',
+JSON.stringify(reports)
+);
+
+document.getElementById('ok').style.display='block';
+
+e.target.reset();
+
+updateStats();
+
+searchReports();
+
+setTimeout(()=>{
+
+document.getElementById('ok').style.display='none';
+
+},5000);
+
+};
+
+
+updateStats();
+
+searchReports();
+
+</script>
+
+</body>
+</html>
