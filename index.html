@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="bn">
 <head>
 <meta charset="utf-8">
@@ -180,6 +181,20 @@ padding:12px;
 border-radius:10px;
 margin-bottom:12px
 }
+.error{
+display:none;
+background:#fef2f2;
+color:#b91c1c;
+border:1px solid #fecaca;
+padding:12px;
+border-radius:10px;
+margin-bottom:12px
+}
+.loading{
+text-align:center;
+padding:25px;
+color:#667085
+}
 
 .stats{
 display:grid;
@@ -208,14 +223,14 @@ border-radius:12px;
 margin-bottom:12px
 }
 
-.delete{
-background:#fee2e2;
-color:#b91c1c;
-border:0;
-border-radius:8px;
-padding:8px 12px;
-cursor:pointer;
-font-weight:bold
+.status{
+display:inline-block;
+padding:4px 9px;
+border-radius:20px;
+font-size:12px;
+font-weight:bold;
+background:#fef3c7;
+color:#92400e
 }
 
 footer{
@@ -237,6 +252,7 @@ nav a{display:none}
 .stats{grid-template-columns:1fr}
 }
 </style>
+
 </head>
 
 <body>
@@ -267,8 +283,8 @@ nav a{display:none}
 নিরাপদভাবে রিপোর্ট করার জন্য একটি সহজ প্ল্যাটফর্ম।
 </p>
 
-<a class="btn white" href="#search">🔎 শিশু খুঁজুন</a>
-<a class="btn outline" href="#report">📢 রিপোর্ট করুন</a>
+<a class="btn white" href="#search">🔎 শিশু খুঁজুন</a> <a class="btn outline" href="#report">📢 রিপোর্ট করুন</a>
+
 </div>
 
 <div class="heroCard">
@@ -309,10 +325,10 @@ nav a{display:none}
 
 </section>
 
-
 <section class="section">
 
 <h2>আপনি কী করতে চান?</h2>
+
 <p class="sub">
 সঠিক অপশন বেছে নিয়ে তথ্য দিন।
 </p>
@@ -333,7 +349,6 @@ onclick="setType('missing')">
 
 </a>
 
-
 <a class="action"
 href="#report"
 onclick="setType('found')">
@@ -352,7 +367,6 @@ onclick="setType('found')">
 
 </section>
 
-
 <section class="section" id="search">
 
 <h2>🔎 হারানো শোনামনি খুঁজুন</h2>
@@ -367,6 +381,7 @@ onclick="setType('found')">
 id="q"
 placeholder="নাম / এলাকা / স্থান / বর্ণনা"
 oninput="searchReports()"
+
 >
 
 <select id="filter" onchange="searchReports()">
@@ -379,15 +394,15 @@ oninput="searchReports()"
 
 <button class="btn primary"
 onclick="searchReports()">
-🔎 খুঁজুন
-</button>
+🔎 খুঁজুন </button>
 
 </div>
 
-<div id="results" class="results"></div>
+<div id="results" class="results">
+<div class="loading">⏳ রিপোর্ট লোড হচ্ছে...</div>
+</div>
 
 </section>
-
 
 <section class="section" id="report">
 
@@ -402,8 +417,10 @@ onclick="searchReports()">
 <div class="form">
 
 <div id="ok" class="ok">
-✅ রিপোর্ট সফলভাবে সংরক্ষণ হয়েছে।
+✅ রিপোর্ট সফলভাবে অনলাইন ডাটাবেসে সংরক্ষণ হয়েছে।
 </div>
+
+<div id="error" class="error"></div>
 
 <form id="f">
 
@@ -421,15 +438,14 @@ onclick="searchReports()">
 
 </select>
 
-
 <label>শিশুর নাম</label>
 
 <input
 id="name"
 required
 placeholder="শিশুর নাম"
->
 
+>
 
 <label>বয়স</label>
 
@@ -437,8 +453,8 @@ placeholder="শিশুর নাম"
 id="age"
 placeholder="যেমন: ৭ বছর"
 required
->
 
+>
 
 <label>লিঙ্গ</label>
 
@@ -450,15 +466,14 @@ required
 
 </select>
 
-
 <label>জেলা / শহর / এলাকা</label>
 
 <input
 id="area"
 required
 placeholder="যেমন: ঢাকা, মিরপুর"
->
 
+>
 
 <label>তারিখ</label>
 
@@ -466,8 +481,8 @@ placeholder="যেমন: ঢাকা, মিরপুর"
 id="date"
 type="date"
 required
->
 
+>
 
 <label>
 শেষ কোথায় দেখা গেছে / কোথায় পাওয়া গেছে?
@@ -477,8 +492,8 @@ required
 id="place"
 required
 placeholder="স্থান লিখুন"
->
 
+>
 
 <label>বর্ণনা</label>
 
@@ -487,22 +502,21 @@ id="desc"
 placeholder="পোশাক, বৈশিষ্ট্য বা প্রয়োজনীয় তথ্য"
 ></textarea>
 
-
 <label>যোগাযোগের তথ্য</label>
 
 <input
 id="contact"
 placeholder="ফোন/ইমেইল"
->
 
+>
 
 <label>ছবির লিংক (ঐচ্ছিক)</label>
 
 <input
 id="photo"
 placeholder="ছবির পাবলিক লিংক"
->
 
+>
 
 <div class="privacy">
 
@@ -513,7 +527,7 @@ NID, পাসপোর্ট, বাসার পূর্ণ ঠিকান�
 
 <br>
 
-<button class="btn primary">
+<button id="submitBtn" class="btn primary" type="submit">
 📢 রিপোর্ট জমা দিন
 </button>
 
@@ -521,28 +535,26 @@ NID, পাসপোর্ট, বাসার পূর্ণ ঠিকান�
 
 </div>
 
-
 <div class="card">
 
-<h3>⚠️ গুরুত্বপূর্ণ</h3>
+<h3>☁️ অনলাইন সিস্টেম</h3>
 
 <div class="notice">
 
-এটি বর্তমানে একটি ডেমো সিস্টেম।
-রিপোর্ট এই ব্রাউজারের Local Storage-এ সংরক্ষিত হয়।
+এই ওয়েবসাইট এখন Supabase অনলাইন ডাটাবেসের সাথে সংযুক্ত।
+রিপোর্ট জমা দিলে তা অনলাইনে সংরক্ষণ হবে।
 
 </div>
 
-<h3>পরবর্তী উন্নয়ন</h3>
+<h3>বর্তমান সুবিধা</h3>
 
 <ul>
 
 <li>☁️ অনলাইন ডাটাবেস</li>
-<li>📷 সরাসরি ছবি আপলোড</li>
-<li>🔐 Admin approval</li>
-<li>🔎 উন্নত সার্চ ও ফিল্টার</li>
-<li>✏️ রিপোর্ট সম্পাদনা</li>
-<li>🗑️ রিপোর্ট মুছে ফেলা</li>
+<li>🔎 অনলাইন রিপোর্ট সার্চ</li>
+<li>📊 রিপোর্টের হিসাব</li>
+<li>📷 ছবির লিংক সংরক্ষণ</li>
+<li>🔐 নিরাপদ ইনপুট</li>
 
 </ul>
 
@@ -557,7 +569,6 @@ NID, পাসপোর্ট, বাসার পূর্ণ ঠিকান�
 </section>
 
 </main>
-
 
 <footer>
 
@@ -576,98 +587,288 @@ NID, পাসপোর্ট, বাসার পূর্ণ ঠিকান�
 
 </footer>
 
-
 <script>
 
-let reports =
-JSON.parse(localStorage.getItem('hs_reports') || '[]');
+/* ================================
+   SUPABASE CONFIGURATION
+================================ */
+
+const SUPABASE_URL =
+"https://ytqqsitnyapauyfhalob.supabase.co";
+
+const SUPABASE_KEY =
+"YOUR_SUPABASE_PUBLISHABLE_KEY";
+
+const TABLE_NAME = "REPORTS";
 
 
-function setType(t){
+/* ================================
+   APP DATA
+================================ */
 
-document.getElementById('type').value=t;
+let reports = [];
+
+
+/* ================================
+   SUPABASE REQUEST
+================================ */
+
+async function supabaseRequest(url,options={}){
+
+const headers = {
+
+"apikey":SUPABASE_KEY,
+
+"Content-Type":"application/json",
+
+...(options.headers || {})
+
+};
+
+const response = await fetch(url,{
+...options,
+headers
+});
+
+if(!response.ok){
+
+let message = "";
+
+try{
+message = await response.text();
+}catch(e){}
+
+throw new Error(
+"Supabase error: " +
+response.status +
+" " +
+message
+);
+
+}
+
+return response;
 
 }
 
 
+/* ================================
+   LOAD REPORTS
+================================ */
+
+async function loadReports(){
+
+const results =
+document.getElementById("results");
+
+results.innerHTML =
+'<div class="loading">⏳ অনলাইন রিপোর্ট লোড হচ্ছে...</div>';
+
+try{
+
+const url =
+SUPABASE_URL +
+"/rest/v1/" +
+TABLE_NAME +
+"?select=*&order=id.desc";
+
+const response =
+await supabaseRequest(url);
+
+const data =
+await response.json();
+
+reports = data.map(row => {
+
+let type = "missing";
+let description = row.description || "";
+
+if(description.startsWith("[FOUND]")){
+
+type = "found";
+
+description =
+description.replace("[FOUND]","").trim();
+
+}
+
+if(description.startsWith("[MISSING]")){
+
+type = "missing";
+
+description =
+description.replace("[MISSING]","").trim();
+
+}
+
+return {
+
+id:row.id,
+
+type:type,
+
+name:row.name || "",
+
+age:row.age || "",
+
+gender:extractValue(description,"লিঙ্গ"),
+
+area:row.location || "",
+
+date:extractValue(description,"তারিখ"),
+
+place:extractValue(description,"স্থান"),
+
+desc:description,
+
+contact:row.phone || "",
+
+photo:row.photo_url || "",
+
+status:row.status || "pending"
+
+};
+
+});
+
+updateStats();
+
+searchReports();
+
+}catch(error){
+
+console.error(error);
+
+results.innerHTML =
+'<div class="empty">❌ অনলাইন ডাটাবেস থেকে রিপোর্ট লোড করা যায়নি।</div>';
+
+}
+
+}
+
+
+/* ================================
+   HELPER
+================================ */
+
+function extractValue(text,label){
+
+const regex =
+new RegExp(
+label + "\\s*:\\s*([^|]+)",
+"i"
+);
+
+const match =
+text.match(regex);
+
+return match ? match[1].trim() : "";
+
+}
+
+
+function cleanDescription(text){
+
+return text
+.replace(/লিঙ্গ\s*:[^|]+\|?/i,"")
+.replace(/তারিখ\s*:[^|]+\|?/i,"")
+.replace(/স্থান\s*:[^|]+\|?/i,"")
+.trim();
+
+}
+
+
+/* ================================
+   SET TYPE
+================================ */
+
+function setType(t){
+
+document.getElementById("type").value = t;
+
+}
+
+
+/* ================================
+   ESCAPE HTML
+================================ */
+
 function esc(s){
 
-return String(s || '').replace(
+return String(s || "").replace(
 /[&<>"']/g,
 m => ({
-'&':'&amp;',
-'<':'&lt;',
-'>':'&gt;',
-'"':'&quot;',
-"'":'&#039;'
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
 }[m])
 );
 
 }
 
 
+/* ================================
+   UPDATE STATS
+================================ */
+
 function updateStats(){
 
-document.getElementById('totalCount').textContent =
+document.getElementById("totalCount").textContent =
 reports.length;
 
-document.getElementById('missingCount').textContent =
-reports.filter(r => r.type === 'missing').length;
+document.getElementById("missingCount").textContent =
+reports.filter(
+r => r.type === "missing"
+).length;
 
-document.getElementById('foundCount').textContent =
-reports.filter(r => r.type === 'found').length;
-
-}
-
-
-function deleteReport(index){
-
-if(!confirm('এই রিপোর্টটি মুছে ফেলতে চান?')) return;
-
-reports.splice(index,1);
-
-localStorage.setItem(
-'hs_reports',
-JSON.stringify(reports)
-);
-
-searchReports();
-
-updateStats();
+document.getElementById("foundCount").textContent =
+reports.filter(
+r => r.type === "found"
+).length;
 
 }
 
 
-function render(a){
+/* ================================
+   RENDER REPORTS
+================================ */
 
-let b=document.getElementById('results');
+function render(list){
 
-if(!a.length){
+const box =
+document.getElementById("results");
 
-b.innerHTML =
+if(!list.length){
+
+box.innerHTML =
 '<div class="empty">🔎 কোনো রিপোর্ট পাওয়া যায়নি।</div>';
 
 return;
 
 }
 
-b.innerHTML=a.map((r,i)=>`
+box.innerHTML =
+list.map(r => `
 
 <div class="card">
 
-<b>
-${r.type==='missing'
-?'🚨 হারিয়েছে'
-:'🤝 পাওয়া গেছে'}
-</b>
+<span class="status">
+${r.type === "missing"
+?"🚨 হারিয়েছে"
+:"🤝 পাওয়া গেছে"}
+</span>
 
 ${r.photo ? `
+
 <img
 src="${esc(r.photo)}"
 alt="শিশুর ছবি"
 onerror="this.style.display='none'"
 >
-` : ''}
+
+` : ""}
 
 <h3>${esc(r.name)}</h3>
 
@@ -675,18 +876,22 @@ onerror="this.style.display='none'"
 
 <b>বয়স:</b>
 ${esc(r.age)}
+
 <br>
 
 <b>লিঙ্গ:</b>
-${esc(r.gender)}
+${esc(r.gender || "জানা নেই")}
+
 <br>
 
 <b>এলাকা:</b>
 ${esc(r.area)}
+
 <br>
 
 <b>তারিখ:</b>
 ${esc(r.date)}
+
 <br>
 
 <b>স্থান:</b>
@@ -694,55 +899,60 @@ ${esc(r.place)}
 
 </p>
 
-<p>${esc(r.desc)}</p>
+<p>
+${esc(cleanDescription(r.desc))}
+</p>
 
 ${r.contact ? `
+
 <p>
 <b>যোগাযোগ:</b>
 ${esc(r.contact)}
 </p>
-` : ''}
 
-<button
-class="delete"
-onclick="deleteReport(${reports.indexOf(r)})">
-🗑️ মুছে ফেলুন
-</button>
+` : ""}
 
 </div>
 
-`).join('');
+`).join("");
 
 }
 
 
+/* ================================
+   SEARCH
+================================ */
+
 function searchReports(){
 
-let q =
-document.getElementById('q')
+const q =
+document.getElementById("q")
 .value
 .toLowerCase()
 .trim();
 
-let t =
-document.getElementById('filter')
+const type =
+document.getElementById("filter")
 .value;
 
-let filtered =
+const filtered =
 reports.filter(r => {
 
-let text =
-(
-r.name+' '+
-r.area+' '+
-r.place+' '+
-r.desc+' '+
-r.gender
+const text = (
+
+r.name + " " +
+r.age + " " +
+r.gender + " " +
+r.area + " " +
+r.date + " " +
+r.place + " " +
+r.desc
+
 ).toLowerCase();
 
 return
 (!q || text.includes(q)) &&
-(!t || r.type===t);
+(!type || r.type === type);
 
 });
 
@@ -751,65 +961,165 @@ render(filtered);
 }
 
 
-document.getElementById('f').onsubmit =
-function(e){
+/* ================================
+   SUBMIT REPORT
+================================ */
+
+document.getElementById("f").onsubmit =
+async function(e){
 
 e.preventDefault();
 
-let r={
+const ok =
+document.getElementById("ok");
 
-id:Date.now(),
+const errorBox =
+document.getElementById("error");
 
-type:document.getElementById('type').value,
+const button =
+document.getElementById("submitBtn");
 
-name:document.getElementById('name').value.trim(),
+ok.style.display = "none";
 
-age:document.getElementById('age').value.trim(),
+errorBox.style.display = "none";
 
-gender:document.getElementById('gender').value,
+button.disabled = true;
 
-area:document.getElementById('area').value.trim(),
+button.textContent =
+"⏳ সংরক্ষণ হচ্ছে...";
 
-date:document.getElementById('date').value,
 
-place:document.getElementById('place').value.trim(),
+const type =
+document.getElementById("type").value;
 
-desc:document.getElementById('desc').value.trim(),
+const name =
+document.getElementById("name").value.trim();
 
-contact:document.getElementById('contact').value.trim(),
+const age =
+document.getElementById("age").value.trim();
 
-photo:document.getElementById('photo').value.trim()
+const gender =
+document.getElementById("gender").value;
+
+const area =
+document.getElementById("area").value.trim();
+
+const date =
+document.getElementById("date").value;
+
+const place =
+document.getElementById("place").value.trim();
+
+const desc =
+document.getElementById("desc").value.trim();
+
+const contact =
+document.getElementById("contact").value.trim();
+
+const photo =
+document.getElementById("photo").value.trim();
+
+
+const prefix =
+type === "found"
+? "[FOUND]"
+: "[MISSING]";
+
+
+const fullDescription =
+prefix +
+" " +
+"লিঙ্গ: " +
+gender +
+" | " +
+"তারিখ: " +
+date +
+" | " +
+"স্থান: " +
+place +
+" | " +
+desc;
+
+
+const payload = {
+
+name:name,
+
+age:age,
+
+phone:contact,
+
+location:area,
+
+description:fullDescription,
+
+photo_url:photo,
+
+status:"pending"
 
 };
 
 
-reports.unshift(r);
+try{
 
-localStorage.setItem(
-'hs_reports',
-JSON.stringify(reports)
-);
+const url =
+SUPABASE_URL +
+"/rest/v1/" +
+TABLE_NAME;
 
-document.getElementById('ok').style.display='block';
+await supabaseRequest(url,{
 
-e.target.reset();
+method:"POST",
 
-updateStats();
+headers:{
 
-searchReports();
+"Prefer":"return=minimal"
+
+},
+
+body:JSON.stringify(payload)
+
+});
+
+
+ok.style.display = "block";
+
+this.reset();
+
+await loadReports();
 
 setTimeout(()=>{
 
-document.getElementById('ok').style.display='none';
+ok.style.display = "none";
 
 },5000);
+
+}catch(error){
+
+console.error(error);
+
+errorBox.textContent =
+"❌ রিপোর্ট সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন।";
+
+errorBox.style.display = "block";
+
+}finally{
+
+button.disabled = false;
+
+button.textContent =
+"📢 রিপোর্ট জমা দিন";
+
+}
 
 };
 
 
-updateStats();
+/* ================================
+   START
+================================ */
 
-searchReports();
+loadReports();
 
 </script>
 
